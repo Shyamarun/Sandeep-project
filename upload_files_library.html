@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Upload</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Upload Books</h2>
+        <form action="upload_files_library.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="category">Select Category:</label>
+                <select class="form-control" id="category" name="category" onchange="changeCategory()">
+                    <option value="">Select Category</option>
+                    <option value="universal">Universal Library</option>
+                    <option value="external">External Abilities</option>
+                    <option value="class">Class Materials</option>
+                    <option value="question">Question Papers</option>
+                </select>
+            </div>
+            <div id="subcategory" style="display: none;">
+                <div class="form-group">
+                    <label for="course">Select Course:</label>
+                    <select class="form-control" id="course" name="course" onchange="changeCourse()">
+                        <option value="">Select Course</option>
+                        <option value="btech">B.Tech</option>
+                        <option value="degree">Degree</option>
+                        <option value="diploma">Diploma</option>
+                        <option value="bpharmacy">Pharmacy</option>
+                    </select>
+                </div>
+                <div id="branchDiv" style="display: none;">
+                    <div class="form-group">
+                        <label for="branch">Select Branch:</label>
+                        <select class="form-control" id="branch" name="branch">
+                            <option value="">Select Branch</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Select Year:</label>
+                        <select class="form-control" id="year" name="year">
+                            <option value="">Select Year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="book_name">Subject Name:</label>
+                <input type="text" class="form-control" id="book_name" name="book_name">
+            </div>
+            <div class="form-group">
+                <label for="description">Question Paper Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-group" id="image-group">
+                <label for="image">Upload Image:</label>
+                <input type="file" class="form-control-file" id="image" name="image" accept=".jpg, .jpeg, .png">
+            </div>
+            <div class="form-group" id="file-group">
+                <label for="file">Upload File:</label>
+                <input type="file" class="form-control-file" id="file" name="file"
+                    accept=".pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+
+    </div>
+
+    <script>
+        function changeCategory() {
+            var category = document.getElementById("category").value;
+            var bookNameLabel = document.querySelector('label[for="book_name"]');
+            var descriptionLabel = document.querySelector('label[for="description"]');
+            var imageGroup = document.getElementById('image-group');
+            var fileGroup = document.getElementById('file-group');
+
+            if (category === "question") {
+                bookNameLabel.textContent = 'Subject Name:';
+                descriptionLabel.textContent = 'Question Paper Description:';
+                imageGroup.style.display = 'none';
+                fileGroup.style.display = 'block';
+            } else {
+                bookNameLabel.textContent = 'Book Name:';
+                descriptionLabel.textContent = 'Book Description:';
+                imageGroup.style.display = 'block';
+                fileGroup.style.display = 'block';
+            }
+
+            if (category === "universal" || category === "external") {
+                document.getElementById("subcategory").style.display = "none";
+            } else {
+                document.getElementById("subcategory").style.display = "block";
+            }
+        }
+
+        function changeCourse() {
+            var course = document.getElementById("course").value;
+            if (course === "btech") {
+                var options = ["CSE", "CSM", "CSD", "MACH", "EEE", "ECE", "AI"];
+            } else if (course === "degree") {
+                var options = ["B.Com commerce", "B.Com computer applications", "B.Sc Mathematics", "B.Sc statistics", "B.Sc computer science", "B.Sc Electronics", "B.Sc Physics"];
+            } else if (course === "diploma") {
+                var options = ["MECH", "EEE", "CE", "ECE"];
+            } else if (course === "bpharmacy") {
+                var options = ["Pharm.D", "B.Pharma"];
+            }
+
+            var select = document.getElementById("branch");
+            select.innerHTML = "";
+            for (var i = 0; i < options.length; i++) {
+                var opt = options[i];
+                var el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+            document.getElementById("branchDiv").style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>

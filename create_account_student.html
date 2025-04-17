@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 class="mb-4">Student Registration</h2>
+        <form id="registrationForm" action="create_account_student.php" method="post" enctype="multipart/form-data"
+            onsubmit="return validateForm()">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="blood_g">College name</label>
+                <input type="text" class="form-control" id="clg_name" name="clg_name"
+                    placeholder="Enter your college name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="blood_g">College code</label>
+                <input type="text" class="form-control" id="clg_code" name="clg_code" placeholder="Enter your college"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="course">Course</label>
+                <select class="form-control" id="course" name="course" required onchange="changeCourse()">
+                    <option value="" disabled selected>Select Your Course</option>
+                    <option value="btech">B.Tech</option>
+                    <option value="bpharmacy">B.Pharmacy</option>
+                    <option value="degree">Degree</option>
+                    <option value="diploma">Diploma</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="profile_photo">Profile Photo</label>
+                <input type="file" class="form-control-file" id="profile_photo" name="profile_photo"
+                    accept=".jpg, .jpeg, .png" required>
+            </div>
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" class="form-control" id="full_name" name="full_name"
+                    placeholder="Enter your full name" required>
+            </div>
+            <!-- Aadhar Card Number -->
+            <div class="form-group">
+                <label for="aadhar_num">Aadhar Card Number</label>
+                <input type="text" class="form-control" id="aadhar_num" name="aadhar_num"
+                    placeholder="Enter your Aadhar card number" pattern="[0-9]{12}"
+                    title="Aadhar number should be 12 digits" required>
+            </div>
+            <div class="form-group">
+                <label for="pan_num">Pan Card Number</label>
+                <input type="text" class="form-control" id="pan_num" name="pan_num"
+                    placeholder="Enter your Pancard number">
+            </div>
+
+            <!-- Registration Number -->
+            <div class="form-group">
+                <label for="reg_num">Registration Number</label>
+                <input type="text" class="form-control" id="reg_num" name="reg_num"
+                    placeholder="Enter your registration number" required>
+            </div>
+
+            <!-- Select Year and Semester -->
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="sem_year">Year</label>
+                    <select class="form-control" id="sem_year" name="sem_year">
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="semester">Semester</label>
+                    <select class="form-control" id="semester" name="semester">
+                        <option value=1>1st Semester</option>
+                        <option value=2>2nd Semester</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Select Branch -->
+            <div class="form-group">
+                <label for="branch">Branch</label>
+                <select class="form-control" id="branch" name="branch">
+                    <!-- Options will be populated by the changeCourse function -->
+                </select>
+            </div>
+
+            <!-- Select Section -->
+            <div class="form-group">
+                <label for="section">Section</label>
+                <select class="form-control" id="section" name="section">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone_num">Student Phone Number</label>
+                <input type="text" class="form-control" id="phone_num" name="phone_num"
+                    placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="parent_name">Parent Name</label>
+                <input type="text" class="form-control" id="parent_name" name="parent_name"
+                    placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="parent_phone_num">Parent Phone Number</label>
+                <input type="text" class="form-control" id="parent_phone_num" name="parent_phone_num"
+                    placeholder="Enter your phone number" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
+                    required>
+            </div>
+
+            <!-- Blood Group -->
+            <div class="form-group">
+                <label for="blood_g">Blood Group</label>
+                <input type="text" class="form-control" id="blood_g" name="blood_g" placeholder="Enter your blood group"
+                    required>
+            </div>
+
+
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="user_pass">Password</label>
+                <input type="password" class="form-control" id="user_pass" name="user_pass"
+                    placeholder="Enter your password" required>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="cnf_pass">Confirm Password</label>
+                <input type="password" class="form-control" id="cnf_pass" name="cnf_pass"
+                    placeholder="Confirm your password" required>
+                <small id="passwordMismatch" class="text-danger" style="display: none;">Passwords do not match.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function changeCourse() {
+            var course = document.getElementById("course").value;
+            var branchOptions;
+            var yearOptions = [1, 2, 3, 4]; // Default years for B.Tech and B.Pharmacy
+
+            switch (course) {
+                case "btech":
+                    branchOptions = ["CSE", "CSM", "CSD", "MECH", "EEE", "ECE", "AI"];
+                    break;
+                case "degree":
+                case "diploma":
+                    branchOptions = course === "degree" ? ["B.Com commerce", "B.Com computer applications", "B.Sc Mathematics", "B.Sc statistics", "B.Sc computer science", "B.Sc Electronics", "B.Sc Physics"] : ["MECH", "EEE", "CE", "ECE"];
+                    yearOptions = [1, 2, 3]; // Only 3 years for Degree and Diploma
+                    break;
+                case "bpharmacy":
+                    branchOptions = ["Pharm.D", "B.Pharma"];
+                    break;
+                default:
+                    branchOptions = [];
+            }
+
+            // Update branch options
+            var branchSelect = document.getElementById("branch");
+            branchSelect.innerHTML = "";
+            branchOptions.forEach(function (opt) {
+                var el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt.toLowerCase();
+                branchSelect.appendChild(el);
+            });
+
+            // Update year options
+            var yearSelect = document.getElementById("sem_year");
+            yearSelect.innerHTML = "";
+            yearOptions.forEach(function (year) {
+                var el = document.createElement("option");
+                el.textContent = year;
+                el.value = year;
+                yearSelect.appendChild(el);
+            });
+        }
+        function validateForm() {
+            var password = document.getElementById("user_pass").value;
+            var confirmPassword = document.getElementById("cnf_pass").value;
+            if (password != confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            // Check password length
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                return false;
+            }
+
+            // Check for uppercase, lowercase, and special character
+            var upperCase = /[A-Z]/;
+            var lowerCase = /[a-z]/;
+            var specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+            if (!upperCase.test(password)) {
+                alert("Password must contain at least one uppercase letter.");
+                return false;
+            }
+
+            if (!lowerCase.test(password)) {
+                alert("Password must contain at least one lowercase letter.");
+                return false;
+            }
+
+            if (!specialChar.test(password)) {
+                alert("Password must contain at least one special character.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+</body>
+
+</html>
